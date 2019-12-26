@@ -1,4 +1,11 @@
+'''
+@Descripttion: 函数操作
+@Author: chalan630
+@Date: 2019-12-25 14:23:08
+@LastEditTime : 2019-12-26 11:42:13
+'''
 # 传递实参
+# 如果函数定义中未使用 / 和 *，则参数可以按位置或按关键字传递给函数
 
 # 位置实参
 def describe_pet(animal_type, pet_name):                        # 定义时可以使用默认值
@@ -10,7 +17,7 @@ describe_pet('hamster', 'harry')                                # 位置实参
 describe_pet(animal_type = 'hamster', pet_name = 'harry')       # 关键字实参
 
 # 让实参变成可选的
-def get_formatted_name(first_name, last_name, middle_name = ''):                        # middle_name 为可选实参
+def get_formatted_name(first_name, last_name, middle_name = ''):        # middle_name 为可选实参
     """显示宠物信息"""
     if middle_name:
         full_name = first_name + ' ' + middle_name + ' ' + last_name
