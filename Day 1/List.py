@@ -1,3 +1,9 @@
+'''
+@Descripttion: 列表相关操作
+@Author: chalan630
+@Date: 2019-12-25 14:23:08
+@LastEditTime : 2019-12-26 12:07:21
+'''
 bicycles = ['trek', 'cannondale', 'redline', 'speciailized']
 
 # 输出指定索引的列表元素
@@ -61,7 +67,8 @@ players[-3:]                        # 列表上最后三个
 # ★★★复制列表★★★
 list2 = [1,2,3,4]
 list1 = list2                       # 类比指针和地址(将list2赋给list1,并不是将list2的副本存储到list1)
-list1 = list2[:]                    # 复制列表
+list1 = list2[:]                    # 复制列表浅拷贝
+list1.copy(list2)                   # 与上句意思相同
 
 dimensions = (200, 50)
 # 虽然元组无法更改，但是可以给元组变量重新赋值
