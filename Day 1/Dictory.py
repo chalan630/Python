@@ -1,4 +1,28 @@
+'''
+@Descripttion: 
+@version: 
+@Author: chalan630
+@Date: 2019-12-25 14:23:08
+@LastEditTime: 2019-12-27 08:38:12
+'''
+# 集合
+{'e', 'b', 'g'}                 # 创建集合
+a = set('abacad')
+b = set('adcged')
+c = set()                       # 创建空集合
+d = {}                          # 创建空字典
+a - b
+# output: {'b'}
+a | b                     # a or b
+# output: {'g', 'c', 'd', 'e', 'b', 'a'}
+a & b
+# output: {'d', 'a', 'c'}
+a ^ b
+# output: {'e', 'b', 'g'}
+
+# 字典
 alien_0 = {'color': 'green', 'points': 5}
+dict([('sape', 4139), ('guido', 4127)])
 
 # 访问键值对
 alien_0['color']
