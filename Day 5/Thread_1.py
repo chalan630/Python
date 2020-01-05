@@ -1,8 +1,8 @@
 '''
-@Descripttion: 
+@Descripttion: 简单多线程方式
 @Author: chalan630
 @Date: 2019-12-29 01:10:41
-@LastEditTime : 2019-12-29 01:16:22
+@LastEditTime : 2019-12-31 10:00:15
 '''
 import time
 import threading

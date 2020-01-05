@@ -1,8 +1,8 @@
 '''
-@Descripttion: 创建线程_2
+@Descripttion: 继承式调用多线程
 @Author: chalan630
 @Date: 2019-12-28 21:06:50
-@LastEditTime : 2019-12-29 01:11:22
+@LastEditTime : 2019-12-31 10:05:04
 '''
 
 import threading
@@ -24,7 +24,7 @@ exitFlag = 0
 
 class myThread(threading.Thread):                   # 直接从 threading.Thread 继承创建一个新的子类
     def __init__(self, threadID, name, counter):
-        threading.Thread.__init__(self)
+        threading.Thread.__init__(self)             # super(myThread, self).__init__()
         self.threadID = threadID
         self.name = name
         self.counter = counter
