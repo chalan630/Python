@@ -4,7 +4,7 @@
 @version: 
 @Author: chalan630
 @Date: 2019-12-25 16:46:15
-@LastEditTime : 2019-12-26 11:45:50
+@LastEditTime : 2019-12-31 10:45:34
 '''
 
 # PartⅠ
@@ -30,7 +30,7 @@ print("""\
     -H hostname             Hostname to connect to
     """)
 
-# PartⅢ
+# Part Ⅲ
 name = '我的博客'
 site = 'www.baidu.com'
 print('{1}网址：{0}'.format(name, site))                                       # 使用位置参数
@@ -41,6 +41,16 @@ print('{name}网址： {site}'.format(name='我的博客', site='www.baidu.com')
 import math
 print('常量PI的值近似为{0:.3f}'.format(math.pi))                                # 将Pi保留到小数点后三位
 print('{0:10}==>{1:10d}'.format('有一个数字', 666))                             # 保证该域至少有这么多的宽度
+print('{:>10}'.format(12))                                                    # ^、<、>分别是居中、左对齐、右对齐，后面带宽度
+print('{:0>10}'.format(12))                                                   # :号后面带填充的字符，只能是一个字符，不指定的话默认是用空格填充
+print('{:b}'.format(12))                                                      # b、d、o、x分别是二进制、十进制、八进制、十六进制
+print("{:,}".format(1234567890))                                              # 千位分隔符
+
+# f-strings
+name = "Q1mi"
+age = 18
+print(f"My name is {name}.I'm {age}")
+
 
 # 传入一个字典, 然后使用方括号`[]`来访问键值
 table = {'Google': 1, 'Baidu': 2, 'Taobao': 3}
