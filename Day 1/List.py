@@ -2,7 +2,7 @@
 @Descripttion: 列表相关操作
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime : 2019-12-26 12:07:21
+@LastEditTime : 2020-01-13 19:22:07
 '''
 bicycles = ['trek', 'cannondale', 'redline', 'speciailized']
 
@@ -63,6 +63,8 @@ players[1:4]                       # 列表中2~4
 players[:4]                         # 列表中从开头到第三个
 players[2:]                         # 列表中第二个到结尾
 players[-3:]                        # 列表上最后三个
+players[::-1]                      
+# 步进为-1   意为逆序(这种技巧对字节串和ASCII字符有用，对已经编码成UTF-8字节串的Unicode字符来说，无法奏效)
 
 # ★★★复制列表★★★
 list2 = [1,2,3,4]

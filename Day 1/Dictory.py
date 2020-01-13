@@ -3,7 +3,7 @@
 @version: 
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime: 2019-12-27 08:38:12
+@LastEditTime : 2020-01-13 18:37:57
 '''
 # 集合
 {'e', 'b', 'g'}                 # 创建集合
@@ -104,3 +104,13 @@ users = {
         'last': 'curie',
     },
 }
+
+# 内置函数
+len(dict)                       # 计算字典元素个数，即键的总数。
+
+# 内置方法
+dict.clear()                    # 删除字典内所有元素
+dict.copy()                     # 返回一个字典的浅复制
+dict.get(key, default=None)     # 返回指定键的值，如果值不在字典中返回default值
+dict.items()                    # 以列表返回可遍历的(键, 值) 元组数组
+dict.keys()                     # 以列表返回一个字典所有的键
