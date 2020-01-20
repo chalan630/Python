@@ -2,13 +2,13 @@
 @Descripttion: 主文件
 @Author: chalan630
 @Date: 2020-01-13 23:04:51
-@LastEditTime : 2020-01-16 16:41:05
+@LastEditTime : 2020-01-16 17:27:28
 '''
 
 import pygame
+import game_functions as gf
 from settings import Settings
 from ship import Ship
-import game_functions as gf
 from pygame.sprite import Group
 
 def run_game():
@@ -23,12 +23,15 @@ def run_game():
     ship = Ship(ai_settings, screen)
     # 创建一个用于存储子弹的编组
     bullets = Group()
+    # 创建一个外星人
+    aliens = Group()
+    gf.create_fleet(ai_settings, screen, aliens)
     # 开始游戏的主循环
     while True:  # 游戏循环
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
         gf.update_bullets(bullets)
-        gf.update_screen(ai_settings, screen, ship, bullets)
+        gf.update_screen(ai_settings, screen, ship, alien, bullets)
 
 
 run_game()
