@@ -32,6 +32,7 @@ class Ship():
         self.moving_down = False            # test
 
     def update(self):
+        # 以速度为单位，向四个方向移动
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ai_settings.ship_speed_factor
         if self.moving_left and self.rect.left > 0:
