@@ -1,8 +1,8 @@
 <!--
- * @Descripttion: README.md
+ * @Description: README.md
  * @Author: chalan630
  * @Date: 2019-12-29 01:20:46
- * @LastEditTime : 2019-12-29 01:23:18
+ * @LastEditTime : 2020-02-08 15:23:16
  -->
 # Day4
 ## 1. Iter_Gener_ator

@@ -1,8 +1,8 @@
 '''
-@Descripttion: 线程同步
+@Description: 线程同步
 @Author: chalan630
 @Date: 2019-12-29 00:31:01
-@LastEditTime : 2019-12-29 00:43:55
+@LastEditTime : 2020-02-08 15:24:02
 '''
 import threading
 import time

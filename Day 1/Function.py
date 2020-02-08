@@ -1,5 +1,5 @@
 '''
-@Descripttion: 函数操作
+@Description: 函数操作
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
 @LastEditTime : 2019-12-26 11:42:13

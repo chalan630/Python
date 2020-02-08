@@ -1,6 +1,6 @@
 #! /usr/bin/env/ python3
 '''
-@Descripttion: 
+@Description: 
 @version: 
 @Author: chalan630
 @Date: 2019-12-26 09:33:14

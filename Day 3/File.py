@@ -1,8 +1,8 @@
 '''
-@Descripttion: Day3的文件操作
+@Description: Day3的文件操作
 @Author: chalan630
 @Date: 2019-12-26 09:20:10
-@LastEditTime : 2019-12-27 08:39:41
+@LastEditTime : 2020-02-08 15:22:49
 '''
 # 打开一个文件
 f = open("open.txt", "w")

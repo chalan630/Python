@@ -1,5 +1,5 @@
 '''
-@Descripttion: 穷举法破解polybius密码
+@Description: 穷举法破解polybius密码
 @Author: chalan630
 @Date: 2020-01-20 20:45:26
 @LastEditTime : 2020-01-20 23:32:17

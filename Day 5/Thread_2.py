@@ -1,5 +1,5 @@
 '''
-@Descripttion: 继承式调用多线程
+@Description: 继承式调用多线程
 @Author: chalan630
 @Date: 2019-12-28 21:06:50
 @LastEditTime : 2019-12-31 10:05:04

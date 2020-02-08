@@ -1,9 +1,8 @@
 '''
-@Descripttion: 
-@version: 
+@Description: 
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime : 2020-01-13 18:37:57
+@LastEditTime : 2020-02-08 15:21:53
 '''
 # 集合
 {'e', 'b', 'g'}                 # 创建集合

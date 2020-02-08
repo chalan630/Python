@@ -1,8 +1,8 @@
 <!--
- * @Descripttion: 多线程部分
+ * @Description: 多线程部分
  * @Author: chalan630
  * @Date: 2019-12-29 01:23:41
- * @LastEditTime : 2019-12-29 01:27:39
+ * @LastEditTime : 2020-02-08 15:23:48
  -->
 # Day5
 

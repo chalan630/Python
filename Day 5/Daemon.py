@@ -1,8 +1,8 @@
 '''
-@Descripttion: 守护线程
+@Description: 守护线程
 @Author: chalan630
 @Date: 2019-12-31 10:05:19
-@LastEditTime : 2020-01-05 12:59:51
+@LastEditTime : 2020-02-08 15:23:38
 '''
 import threading
 import time

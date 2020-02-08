@@ -1,5 +1,5 @@
 '''
-@Descripttion: Iterator & Generator
+@Description: Iterator & Generator
 @Author: chalan630
 @Date: 2019-12-27 11:12:05
 @LastEditTime : 2019-12-28 19:56:52

@@ -1,8 +1,8 @@
 '''
-@Descripttion: 异常处理
+@Description: 异常处理
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime : 2019-12-28 20:49:10
+@LastEditTime : 2020-02-08 15:22:15
 '''
 # 使用try-except代码块
 try:

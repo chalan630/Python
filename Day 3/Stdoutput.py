@@ -1,10 +1,10 @@
 #! /usr/bin/env/ python3
 '''
-@Descripttion: 输出格式美化
+@Description: 输出格式美化
 @version: 
 @Author: chalan630
 @Date: 2019-12-25 16:46:15
-@LastEditTime : 2019-12-31 10:45:34
+@LastEditTime : 2020-02-08 15:22:58
 '''
 
 # PartⅠ

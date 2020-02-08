@@ -1,8 +1,8 @@
 '''
-@Descripttion: 变量的作用域
+@Description: 变量的作用域
 @Author: chalan630
 @Date: 2019-12-27 10:28:39
-@LastEditTime : 2019-12-28 20:49:33
+@LastEditTime : 2020-02-08 15:23:07
 '''
 # 内置名称（built-in names）， Python 语言内置的名称，比如函数名 abs、char 和异常名称 BaseException、Exception 等等。
 # 全局名称（global names），模块中定义的名称，记录了模块的变量，包括函数、类、其它导入的模块、模块级的变量和常量。

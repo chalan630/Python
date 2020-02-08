@@ -1,8 +1,8 @@
 '''
-@Descripttion: 列表相关操作
+@Description: 列表相关操作
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime : 2020-01-13 19:22:07
+@LastEditTime : 2020-02-08 15:22:05
 '''
 bicycles = ['trek', 'cannondale', 'redline', 'speciailized']
 

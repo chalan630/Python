@@ -1,5 +1,5 @@
 '''
-@Descripttion: 线程优先级队列
+@Description: 线程优先级队列
 @Author: chalan630
 @Date: 2019-12-29 00:43:28
 @LastEditTime : 2019-12-29 01:07:49

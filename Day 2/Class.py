@@ -1,5 +1,5 @@
 '''
-@Descripttion: Class.py
+@Description: Class.py
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
 @LastEditTime : 2019-12-29 01:18:28
