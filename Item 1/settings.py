@@ -1,8 +1,8 @@
 '''
-@Descripttion: 控制游戏外观和飞船速度属性
+@Description: 控制游戏外观和飞船速度属性
 @Author: chalan630
 @Date: 2020-01-14 20:25:02
-@LastEditTime : 2020-01-16 16:30:56
+@LastEditTime : 2020-02-08 15:21:30
 '''
 
 

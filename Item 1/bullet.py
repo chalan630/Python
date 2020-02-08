@@ -1,5 +1,5 @@
 '''
-@Descripttion: 子弹管理类
+@Description: 子弹管理类
 @Author: chalan630
 @Date: 2020-01-15 20:53:40
 @LastEditTime : 2020-01-15 21:02:02

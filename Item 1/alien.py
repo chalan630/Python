@@ -1,8 +1,8 @@
 '''
-@Descripttion: 
+@Description: 外星人类
 @Author: chalan630
 @Date: 2020-01-16 17:15:09
-@LastEditTime : 2020-01-16 17:24:59
+@LastEditTime : 2020-02-08 17:09:26
 '''
 import pygame
 from pygame.sprite import Sprite

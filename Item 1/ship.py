@@ -1,8 +1,8 @@
 '''
-@Descripttion: 飞船外形
+@Description: 飞船外形
 @Author: chalan630
 @Date: 2020-01-14 22:06:08
-@LastEditTime : 2020-01-15 21:22:56
+@LastEditTime : 2020-02-07 23:19:28
 '''
 import pygame
 import os
@@ -48,3 +48,7 @@ class Ship():
         """在指定位置绘制飞船"""
         self.screen.blit(self.image, self.rect)
 
+    def center_ship(self): 
+        """让飞船在屏幕上居中"""
+        self.center = self.screen_rect.centerx
+        self.bot = self.screen_rect.bottom
