@@ -2,7 +2,7 @@
 @Description: 主文件
 @Author: chalan630
 @Date: 2020-01-13 23:04:51
-@LastEditTime : 2020-02-08 17:01:44
+@LastEditTime : 2020-02-08 21:10:56
 '''
 
 import pygame
@@ -12,7 +12,7 @@ from ship import Ship
 from pygame.sprite import Group
 from game_stats import GameStats
 from button import Button
-
+from scoreboard import Scoreboard
 
 def run_game():
     # 初始化游戏并创建一个屏幕对象
@@ -26,6 +26,7 @@ def run_game():
     play_button = Button(ai_settings, screen, "Play")
     # 创建一个用于存储游戏统计信息的实例
     stats = GameStats(ai_settings)
+    sb = Scoreboard(ai_settings, screen, stats)
     # 创建一艘飞船
     ship = Ship(ai_settings, screen)
     # 创建一个用于存储子弹的编组
@@ -35,12 +36,12 @@ def run_game():
     gf.create_fleet(ai_settings, screen, ship, aliens)
     # 开始游戏的主循环
     while True:  # 游戏循环
-        gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
+        gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
-        gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)
+        gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button)
 
 
 run_game()

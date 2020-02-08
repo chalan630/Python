@@ -2,7 +2,7 @@
 @Description: 控制游戏外观和飞船速度属性
 @Author: chalan630
 @Date: 2020-01-14 20:25:02
-@LastEditTime : 2020-02-08 15:21:30
+@LastEditTime : 2020-02-08 20:19:36
 '''
 
 
@@ -13,7 +13,8 @@ class Settings():
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
-        self.ship_speed_factor = 2.5
+
+        # 飞船设置
         self.ship_limit = 3
 
         # 子弹设置
@@ -21,9 +22,28 @@ class Settings():
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
-        self.bullets_allowed = 3
 
         # 外星人设置
-        self.alien_speed_factor = 1
-        self.fleet_drop_speed = 10          # 到达边缘时，向下移动的速度
         self.fleet_direction = 1
+
+        # 动态难度
+        self.speedup_scale = 1.1
+        self.score_scale = 1.5
+        self.initialize_dynamic_settings()
+
+    def initialize_dynamic_settings(self):
+        self.bullets_allowed = 10
+        self.alien_speed_factor = 1
+        self.ship_speed_factor = 2.5
+        self.fleet_drop_speed = 10          # 到达边缘时，向下移动的速度
+        self.alien_points = 50
+
+
+    def increase_speed(self):
+        """初始化随游戏进行变化的设置"""
+        self.ship_speed_factor *= self.speedup_scale
+        self.alien_speed_factor *= self.speedup_scale
+        self.fleet_drop_speed *= self.speedup_scale
+        if self.bullets_allowed > 4:
+            self.bullets_allowed -= 1
+        self.alien_points = int(self.alien_points * self.score_scale)
