@@ -11,20 +11,39 @@ import gameFlag as gl
 from hero import Hero
 from config import Config
 
-# TODO: 2. 不能连续触发
-def check_keydown_events():
+
+def check_keydown_events(event):
     hero = gl.get_value('hero')
-    key_pressed = pygame.key.get_pressed()
-    if key_pressed[pygame.K_w] or key_pressed[pygame.K_UP]:
-        hero.moveUp()
-    if key_pressed[pygame.K_s] or key_pressed[pygame.K_DOWN]:
-        hero.moveDown()
-    if key_pressed[pygame.K_a] or key_pressed[pygame.K_LEFT]:
-        hero.moveLeft()
-    if key_pressed[pygame.K_d] or key_pressed[pygame.K_RIGHT]:
-        hero.moveRight()
+    if event.key == pygame.K_RIGHT:
+        hero.setDirect('right', True)
+    elif event.key == pygame.K_LEFT:
+        hero.setDirect('left', True)
+    elif event.key == pygame.K_UP:
+        hero.setDirect('up', True)
+    elif event.key == pygame.K_DOWN:
+        hero.setDirect('down', True)
+    elif event.key == pygame.K_q:
+        gl.set_value('isGameStart', False)
+
+
+def check_keyup_events(event):
+    hero = gl.get_value('hero')
+    if event.key == pygame.K_RIGHT:
+        hero.setDirect('right', False)
+    elif event.key == pygame.K_LEFT:
+        hero.setDirect('left', False)
+    elif event.key == pygame.K_UP:
+        hero.setDirect('up', False)
+    elif event.key == pygame.K_DOWN:
+        hero.setDirect('down', False)
+
 
 def check_event(Btns):
+    """
+    游戏事件检查
+    :param Btns: 按键字典
+    :return:
+    """
     # 获取鼠标坐标
     mx, my = pygame.mouse.get_pos()
     # 获取键盘输入，并处理事件
@@ -32,7 +51,9 @@ def check_event(Btns):
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events()
+            check_keydown_events(event)
+        elif event.type == pygame.KEYUP:
+            check_keyup_events(event)
         elif event.type == pygame.MOUSEMOTION:
             # 判断鼠标是否移动到按钮范围之内
             for btn in Btns.values():
@@ -48,6 +69,7 @@ def check_event(Btns):
         #     if event.key == pygame.K_q:
         #         gl.set_value('isGameStart', False)
 
+#
 def btn_start():
     print("我被按下了")
     gl.set_value('isGameStart', True)
@@ -56,14 +78,19 @@ def btn_quit():
     print('See you next time!')
     sys.exit()
 
+
 def game_start(screen):
+    """
+    游戏开始函数
+    :param screen: 获得游戏屏幕数据
+    """
     if not gl.get_value('isLoadHero'):
         hero = Hero('hero', Config.get('imgfolder'), screen)
         gl.set_value('hero', hero)
         gl.set_value('isLoadHero', True)
     else:
         hero = gl.get_value('hero')
-        screen.blit(hero.image1, hero.rect)
+        hero.blitMe()
 
 
 def draw_button(screen, Btns):

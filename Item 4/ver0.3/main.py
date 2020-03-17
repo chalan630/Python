@@ -6,6 +6,13 @@
 @LastEditTime: 2020-03-03 16:20:59
 '''
 
+"""
+编程规范：
+    函数名使用下划线分割
+    类方法使用小驼峰
+    常量全大写
+"""
+
 import pygame
 import os, sys
 # 自定义部分
@@ -27,7 +34,7 @@ def main():
 
     # 初始化响应环境
     pygame.init()
-    pygame.display.set_caption('躲避者 Demo Ver0.2')
+    pygame.display.set_caption('躲避者 Demo Ver0.3')
     screen = pygame.display.set_mode([Config.get('WIDTH'), Config.get('HEIGHT')])
     # 实例化Pygame 的time 模块的 Clock 对象
     clock = pygame.time.Clock()
@@ -53,6 +60,7 @@ def main():
                            startBtns['Click'], gf.btn_start, btnFont)
     Btns['quit'] = Button(90, 400, "", quitBtns['Normal'], quitBtns['Select'], quitBtns['Click'], gf.btn_quit, btnFont)
 
+    # 游戏正文
     while True:
         gf.check_event(Btns)
         bg.action()

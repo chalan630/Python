@@ -24,6 +24,8 @@ class Hero():
             (self.width - self.rect.width) // 2, \
             self.height - self.rect.height - 60  # 减60留给状态栏
         self.speed = 10
+        # self.moveFlag = False
+        self.direct = [0, 0, 0, 0]
 
     def moveUp(self):
         if self.rect.top > 0:
@@ -48,3 +50,52 @@ class Hero():
             self.rect.left += self.speed
         else:
             self.rect.right = self.width
+
+    def blitMe(self):               # 绘制
+        """在指定位置绘制飞船"""
+        # if self.moveFlag:
+        if self.direct[0] == 1:
+            self.moveUp()
+        if self.direct[1] == 1:
+            self.moveDown()
+        if self.direct[2] == 1:
+            self.moveLeft()
+        if self.direct[3] == 1:
+            self.moveRight()
+
+        self.screen.blit(self.image1, self.rect)
+
+    # def setMoveFlag(self, attitude=False):
+    #     """
+    #     设置移动标志
+    #     :param attitude: 为True时表示：开始移动
+    #     """
+    #     self.moveFlag = attitude
+
+    def setDirect(self, str_, attitude=False):
+        """
+        设置移动方向
+        :param str_: 移动方向
+        :param attitude: 为True时表示：按下某方向
+        """
+        key = 0
+        value = 0    # 键值
+        if attitude:
+            value = 1
+        elif not attitude:
+            value = 0
+        if str_ == 'up':
+            key = 0
+        elif str_ == 'down':
+            key = 1
+        elif str_ == 'left':
+            key = 2
+        elif str_ == 'right':
+            key = 3
+        self.direct[key] = value
+        # 防止斜向移动速度过高
+        if self.direct.count(1) == 2:
+            self.speed = 7
+        else:
+            self.speed = 10
+        # print(self.speed)

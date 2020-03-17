@@ -1,6 +1,6 @@
 """
 全局变量
-isGameStart
+isGameStatus 0游戏启动过程 1按下启动按钮
 isHeroLoad
 """
 
