@@ -151,7 +151,7 @@ def game_over(screen):
     :param screen:
     :return:
     """
-    score_font = pygame.font.Font(Config.get('fontfolder') + 'pf.ttf', 36)
+    score_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
     score = gl.get_value('score')
     record_score = 0
     with open("record.txt", "r") as f:
@@ -200,7 +200,7 @@ def game_start(screen, Btns):
     else:
         hero = gl.get_value('hero')
         hero.blitMe(not gl.get_value('isPause'))
-        score_font = pygame.font.Font(Config.get('fontfolder') + 'pf.ttf', 36)
+        score_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
         score_text = score_font.render("Score : %s" % str(gl.get_value('score')), True, (255, 255, 255))
         screen.blit(score_text, (10, 5))
         enemy_function(screen, 2)

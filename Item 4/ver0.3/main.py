@@ -52,7 +52,7 @@ def main():
     quitBtns['Select'] = pygame.image.load(Config.get('imgfolder') + 'button_quit_1.png')
     quitBtns['Click'] = pygame.image.load(Config.get('imgfolder') + 'button_quit_2.png')
     # 初始化按钮字体
-    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'pf.ttf', 40)
+    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'text.ttf', 40)
     # 初始化按钮
     # 开始按钮
     Btns = {}

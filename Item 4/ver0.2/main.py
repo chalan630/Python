@@ -28,7 +28,7 @@ def main():
     startBtnSelect = pygame.image.load(Config.get('imgfolder') + 'button_start_1.png')
     startBtnClick = pygame.image.load(Config.get('imgfolder') + 'button_start_2.png')
     # 初始化字体按钮
-    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'pf.ttf', 40)
+    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'text.ttf', 40)
     # 初始化按钮
     btn = Button(90, 200, "", startBtnNormal, startBtnSelect, startBtnClick, gf.btn_call_back, btnFont)
 

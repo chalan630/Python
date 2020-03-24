@@ -67,7 +67,7 @@ def main():
     pause_rect = pauseBtns['Normal'].get_rect()
     pause_rect.left, pause_rect.top = Config.get('WIDTH') - pause_rect.width - 10, 10
     # 初始化按钮字体
-    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'pf.ttf', 40)
+    btnFont = pygame.font.SysFont(Config.get('fontfolder') + 'text.ttf', 40)
     # 初始化按钮
     # 开始按钮
     Btns = {}
