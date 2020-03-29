@@ -2,11 +2,11 @@
 @Description: 
 @Author: chalan630
 @Date: 2020-01-20 15:51:32
-@LastEditTime : 2020-02-08 15:24:26
+@LastEditTime: 2020-03-28 12:43:07
 '''
 # coding:utf-8
 
-table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
 def BaseXX_encode(words):
     # 字符转化为二进制列表
