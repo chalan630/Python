@@ -43,7 +43,7 @@ def btn_endless_mode():
 def btn_map1():
     gl.set_value('load_map', 1)
     gl.set_value('isGameStatus', 'game_start')
-    gl.set_value('GameMode', 'endless')
+    gl.set_value('GameMode', 'normal')
 
 
 def btn_map2():
@@ -61,6 +61,7 @@ def btn_map3():
 def btn_restart():
     gl.set_value('isGameStatus', 'game_start')
     gl.set_value('isLoadHero', False)
+    gl.set_value('level', 1)
     print("再来一次")
 
 

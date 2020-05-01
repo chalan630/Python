@@ -53,12 +53,12 @@ def init_button():
                              stdBtns['Click'], bf.btn_log_out, btnFont)
     Btns['endless'] = Button(90, 400, "无尽模式", stdBtns['Normal'], stdBtns['Select'], \
                              stdBtns['Click'], bf.btn_endless_mode, btnFont)
-    Btns['Map1'] = Button(90, 300, "森  林", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map1'] = Button(90, 300, "Map 1", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map1, btnFont)
-    Btns['Map2'] = Button(90, 400, "沙  漠", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map2'] = Button(90, 400, "Map 2", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map2, btnFont)
-    Btns['Map3'] = Button(90, 500, "草  地", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map3'] = Button(90, 500, "Map 3", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map3, btnFont)
-    Btns['back'] = Button(90, 500, "草  地", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['back'] = Button(90, 500, "Map 4", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map3, btnFont)
     return Btns

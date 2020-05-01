@@ -11,7 +11,7 @@ import random
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, enemyName, imagePath, screen, score, damage):
+    def __init__(self, enemyName, imagePath, screen, score, damage, level=1):
         """
         创建通用enemy类
         :param enemyName: {str}输入敌人图片文件名
@@ -31,12 +31,17 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.left, self.rect.top = [random.randint(0, self.width - self.rect.width), \
                                          random.randint(-2 * self.height, 0)]
         self.mask = pygame.mask.from_surface(self.image)  # 用于碰撞检测
-        self.initSpeed()
         self.score = score
         self.damage = damage
+        self.upgrade(level)
         self.isCollide = False
 
-    def initSpeed(self, level=1):
+    def upgrade(self, level):
+        self.initSpeed(level)
+        self.score = self.score * level
+        self.damage = self.score * level
+
+    def initSpeed(self, level):
         speed_list = [-1, 0, 1]
         flag = random.randint(0, 2)
         self.speed[0] = 2 * level

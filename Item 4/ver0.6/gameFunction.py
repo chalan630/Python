@@ -13,6 +13,7 @@ from hero import Hero
 from config import Config
 from enemy import Enemy
 from wall import Wall
+from healthStar import HealthStar
 
 
 # TODO: 1.游戏暂停功能bug修复 √
@@ -236,7 +237,7 @@ def game_endless(screen):
         wall_function(screen, 2)
         enemy_function(screen, 2)
         hero = gl.get_value('hero')
-        hero.blitMe(not gl.get_value('isPause'))
+        hero.blitMe(not gl.get_value('isPause'), gl.get_value('level'))
         score_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
         score_text = score_font.render("Score : %s" % str(gl.get_value('score')), True, (255, 255, 255))
         screen.blit(score_text, (10, 5))
@@ -251,7 +252,73 @@ def game_start(screen):
     if gl.get_value('GameMode') == 'endless':
         game_endless(screen)
     elif gl.get_value('GameMode') == 'normal':
-        pass
+        if gl.get_value('load_map') == 1:
+            game_map1(screen)
+
+
+def game_map1(screen):
+    """
+        Map1特性(二级函数)(由game_start调用)
+        :param screen:
+        :return:
+    """
+    if gl.get_value('isLoadHero') == False:  # 检测初次运行
+        hero = Hero('hero', Config.get('imgfolder'), screen)
+        gl.set_value('hero', hero)
+        gl.set_value('isLoadHero', True)
+        gl.set_value('score', 0)
+        gl.set_value('isPause', False)
+        wall_function(screen, 1)
+        enemy_function(screen, 1)
+        health_function(screen, 1)
+    else:
+        wall_function(screen, 2)
+        enemy_function(screen, 2)
+        health_function(screen, 2)
+        hero = gl.get_value('hero')
+        hero.blitMe(not gl.get_value('isPause'), gl.get_value('level'))
+        score_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
+        score_text = score_font.render("Score : %s" % str(gl.get_value('score')), True, (255, 255, 255))
+        screen.blit(score_text, (10, 5))
+        check_collide()
+
+
+def health_function(screen, step):
+    """
+    处理游戏中障碍物函数(三级函数)(由game_endless调用)
+    :param screen:
+    :param flag:
+    :return:
+    """
+    if step == 1:
+        health_bag = pygame.sprite.Group()
+        add_star(screen, 1, health_bag, 'health', 10)
+        gl.set_value('health_bag', health_bag)
+    elif step == 2:
+        health_bag = gl.get_value('health_bag')
+        if len(health_bag) == 0:
+            add_star(screen, 1, health_bag, 'health', 10)
+        draw_group(screen, health_bag)
+
+
+def add_star(screen, num, group, name, value):
+    """
+    生成star(二级函数)
+    :param value:
+    :param screen:
+    :param num:
+    :param group:
+    :param name:
+    :return:
+    """
+    walls = gl.get_value('walls')
+    i = 0
+    for i in range(num):
+        unit = HealthStar(name, Config.get('imgfolder'), screen, value, gl.get_value('level'))
+        while pygame.sprite.spritecollide(unit, group, False, pygame.sprite.collide_mask) or \
+                pygame.sprite.spritecollide(unit, walls, False, pygame.sprite.collide_mask):
+            unit = HealthStar(name, Config.get('imgfolder'), screen, value, gl.get_value('level'))
+        group.add(unit)
 
 
 def check_collide():
@@ -267,9 +334,19 @@ def check_collide():
     check_enemy_wall_collide(walls, rocks)
     check_hero_wall_collide(hero, walls)
     check_hero_enemy_collide(hero, rocks)
+    if gl.get_value('load_map') == 1:
+        health_bag = gl.get_value('health_bag')
+        check_hero_star_collide(hero, health_bag)
     HP = hero.getHP()
-    if HP == 0:
+    if HP < 0:
         gl.set_value('isGameStatus', 'game_over')
+
+
+def check_hero_star_collide(hero, star_group):
+    collide_flag = pygame.sprite.spritecollide(hero, star_group, False, pygame.sprite.collide_mask)
+    if collide_flag:
+        collide_flag[0].health(hero)
+        star_group.remove(collide_flag[0])
 
 
 def check_hero_enemy_collide(hero, enemy):
@@ -280,10 +357,10 @@ def check_hero_enemy_collide(hero, enemy):
 
 def check_hero_wall_collide(hero, walls):
     temp = pygame.sprite.spritecollide(hero, walls, False, pygame.sprite.collide_mask)
-    hero.setDirectMoveFlag('up', False)
-    hero.setDirectMoveFlag('down', False)
-    hero.setDirectMoveFlag('right', False)
-    hero.setDirectMoveFlag('left', False)
+    hero.set_direct_move_flag('up', False)
+    hero.set_direct_move_flag('down', False)
+    hero.set_direct_move_flag('right', False)
+    hero.set_direct_move_flag('left', False)
     if temp:
         # print('hit')
         if len(temp) == 1:
@@ -292,40 +369,40 @@ def check_hero_wall_collide(hero, walls):
                 width = abs(temp[0].rect.right - hero.rect.left)
                 height = abs(temp[0].rect.top - hero.rect.bottom)
                 if width > height:
-                    hero.setDirectMoveFlag('down', True)
+                    hero.set_direct_move_flag('down', True)
                 elif width < height:
-                    hero.setDirectMoveFlag('left', True)
+                    hero.set_direct_move_flag('left', True)
             elif hero.rect.bottom > temp[0].rect.bottom > hero.rect.top and \
                     hero.rect.right > temp[0].rect.right > hero.rect.left:
                 width = abs(temp[0].rect.right - hero.rect.left)
                 height = abs(temp[0].rect.bottom - hero.rect.top)
                 if width > height:
-                    hero.setDirectMoveFlag('up', True)
+                    hero.set_direct_move_flag('up', True)
                 elif width < height:
-                    hero.setDirectMoveFlag('left', True)
+                    hero.set_direct_move_flag('left', True)
             elif hero.rect.right > temp[0].rect.left > hero.rect.left and \
                     hero.rect.bottom > temp[0].rect.bottom > hero.rect.top:
                 width = abs(hero.rect.right - temp[0].rect.left)
                 height = abs(temp[0].rect.bottom - hero.rect.top)
                 if width > height:
-                    hero.setDirectMoveFlag('up', True)
+                    hero.set_direct_move_flag('up', True)
                 elif width < height:
-                    hero.setDirectMoveFlag('right', True)
+                    hero.set_direct_move_flag('right', True)
             elif hero.rect.right > temp[0].rect.left > hero.rect.left and \
                     hero.rect.bottom > temp[0].rect.top > hero.rect.top:
                 width = abs(hero.rect.right - temp[0].rect.left)
                 height = abs(hero.rect.bottom - temp[0].rect.top)
                 if width > height:
-                    hero.setDirectMoveFlag('down', True)
+                    hero.set_direct_move_flag('down', True)
                 elif width < height:
-                    hero.setDirectMoveFlag('right', True)
+                    hero.set_direct_move_flag('right', True)
         if hero.directMoveFlag.count(1) == 0:
             if hero.rect.bottom > temp[0].rect.top > hero.rect.top and \
                     temp[0].rect.left <= hero.rect.left <= temp[0].rect.right:
-                hero.setDirectMoveFlag('down', True)
+                hero.set_direct_move_flag('down', True)
             elif hero.rect.bottom > temp[0].rect.bottom > hero.rect.top and \
                     temp[0].rect.left <= hero.rect.left <= temp[0].rect.right:
-                hero.setDirectMoveFlag('up', True)
+                hero.set_direct_move_flag('up', True)
 
 
 def check_enemy_wall_collide(immutable_group, alterable_group):
@@ -436,13 +513,14 @@ def wall_function(screen, flag):
     elif flag == 2:
         walls = gl.get_value('walls')
         if len(walls) == 0:
+            gl.set_value('level', gl.get_value('level') + 0.1)
             add_wall(screen, walls)
         draw_group(screen, walls)
 
 
 def add_wall(screen, group):
     tmp = 0
-    for i in range(30):
+    for i in range(5):
         if i % 3 == 1:
             null = random.randint(0, 120) % 5
             if null == tmp:
@@ -477,7 +555,8 @@ def enemy_function(screen, step):
 
 def add_enemy(screen, num, group, name, score, damage):
     """
-    将something添加进精灵组(二级函数)
+    将具有伤害的精灵添加进精灵组(二级函数)
+    :param damage: 单个伤害
     :param group:{group}石组
     :param num:{int}石块数量
     :param screen:{screen}游戏屏幕数据
@@ -488,10 +567,10 @@ def add_enemy(screen, num, group, name, score, damage):
     walls = gl.get_value('walls')
     i = 0
     for i in range(num):
-        unit = Enemy(name, Config.get('imgfolder'), screen, score, damage)
+        unit = Enemy(name, Config.get('imgfolder'), screen, score, damage, gl.get_value('level'))
         while pygame.sprite.spritecollide(unit, group, False, pygame.sprite.collide_mask) or \
                 pygame.sprite.spritecollide(unit, walls, False, pygame.sprite.collide_mask):
-            unit = Enemy(name, Config.get('imgfolder'), screen, score, damage)
+            unit = Enemy(name, Config.get('imgfolder'), screen, score, damage, gl.get_value('level'))
         group.add(unit)
 
 

@@ -17,6 +17,7 @@ password_text_box
 username_text_box
 error_type  # 登录注册中的错误信息
 load_map    # 加载地图
+level       # 级别
 """
 
 

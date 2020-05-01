@@ -32,6 +32,7 @@ def main():
     gl.set_value('isLoadHero', False)
     gl.set_value('error_type', 0)
     gl.set_value('load_map', 0)
+    gl.set_value('level', 1)
 
     # 改变目录 修正 vscode 中的路径异常问题
     os.chdir(sys.path[0])
@@ -58,7 +59,8 @@ def main():
     while True:
         gf.check_event(Btns)    # 获取鼠标键盘事件
         # bg.action()             # 背景运动
-        bg[gl.get_value('load_map')].draw(not gl.get_value('isPause'))               # 背景描绘
+        bg[gl.get_value('load_map')].draw(not gl.get_value('isPause'), \
+                                          gl.get_value('level'))               # 背景描绘
         if gl.get_value('isGameStatus') != 0:
             if gl.get_value('isGameStatus') == 'start':
                 screen.blit(game_title_text, (100, 150))

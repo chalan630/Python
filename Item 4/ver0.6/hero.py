@@ -40,12 +40,11 @@ class Hero:
         self.HP_upper_limit = 100       # 生命值上限
         self.HP_now = 100               # 当前生命值
         self.skill_count = 3            # 技能次数
-        self.level = 1                  # 级别
         self.speed = 4
         self.invincibleFlag = False
         self.invincibleTime = 60
-        self.resetStatus()
-        self.resetPosition()
+        self.reset_status()
+        self.reset_position()
 
     def moveUp(self):
         if self.rect.top > 0:
@@ -122,20 +121,19 @@ class Hero:
             return True
 
     # TODO: 优化闪烁方式
-    def blitMe(self, flag):               # 绘制
+    def blitMe(self, flag, level=1):               # 绘制
         """
         在指定位置绘制角色
         @:param: flag:{bool} 是否移动
         """
         if flag:
             self.switchImage()
-            self.move()
-        self.drawStatusBar()
+            self.move(level)
+        self.drawStatusBar(level)
         if self.invincibleStatus():
             self.screen.blit(self.image, self.rect)
 
-
-    def drawStatusBar(self):
+    def drawStatusBar(self, level):
         HP_percent = self.HP_now / self.HP_upper_limit * 100
         # 绘制血条
         if HP_percent > 0:
@@ -150,13 +148,13 @@ class Hero:
             skill_text = self.Font_txt.render("X %d" % self.skill_count, True, (255, 255, 255))
             self.screen.blit(skill_text, (55, self.height - 40))
             # 绘制当前游戏等级
-            level_text = self.Font_txt.render("Lv : %d" % self.level, True, (255, 255, 255))
+            level_text = self.Font_txt.render("Lv : %d" % level, True, (255, 255, 255))
             self.screen.blit(level_text, (self.width - 80, self.height - 40))
 
-    def move(self):
+    def move(self, level):
         if self.directMoveFlag[0] == 1:
             if self.rect.top < self.height - 60 - self.rect.height:
-                self.rect.top += 2
+                self.rect.top += (1 * level)
             elif self.rect.top >= self.height - 60 - self.rect.height:
                 self.HP_now = 0
         if self.direct[0] == 1 and self.directMoveFlag[0] == 0:
@@ -196,7 +194,7 @@ class Hero:
             self.speed = 4
         # print(self.speed)
 
-    def setDirectMoveFlag(self, str_, attitude=False):
+    def set_direct_move_flag(self, str_, attitude=False):
         key = 0
         value = 0  # 键值
         if attitude:
@@ -213,12 +211,12 @@ class Hero:
             key = 3
         self.directMoveFlag[key] = value
 
-    def resetPosition(self):
+    def reset_position(self):
         self.rect.left, self.rect.top = \
             (self.width - self.rect.width) // 2, \
             self.height - self.rect.height - 60  # 减60留给状态栏
 
-    def resetStatus(self):
+    def reset_status(self):
         self.HP_upper_limit = 100       # 生命值上限
         self.HP_now = 100               # 当前生命值
         self.skill_count = 3            # 技能次数

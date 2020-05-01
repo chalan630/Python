@@ -27,21 +27,21 @@ class Background():
         self.y2 = self.y1 - self.image2_rect.height
 
     # 计算图片绘制坐标
-    def action(self):
-        self.y1 = self.y1 + 1
-        self.y2 = self.y2 + 1
+    def action(self, level=1):
+        self.y1 = self.y1 + (1 * level)
+        self.y2 = self.y2 + (1 * level)
         # 第一张图超出屏幕了，就接到第二张图的后面，以此类推。
         if self.y1 >= self.screen_rect.height:
             self.y1 = self.y2 - self.image1_rect.height
         if self.y2 >= self.screen_rect.height:
             self.y2 = self.y1 - self.image2_rect.height
 
-    def draw(self, flag):
+    def draw(self, flag, level=1):
         """
         绘制地图的两张图片
         :param flag: 游戏是否暂停的标志
         """
         if flag:
-            self.action()
+            self.action(level)
         self.screen.blit(self.image1, (0, self.y1))
         self.screen.blit(self.image2, (0, self.y2))
