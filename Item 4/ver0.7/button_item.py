@@ -61,8 +61,20 @@ def init_button():
                           stdBtns['Click'], bf.btn_map2, btnFont)
     Btns['Map3'] = Button(90, 500, "Map 3", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map3, btnFont)
-    Btns['back'] = Button(90, 500, "Map 4", stdBtns['Normal'], stdBtns['Select'], \
-                          stdBtns['Click'], bf.btn_map3, btnFont)
+    Btns['back1'] = Button(90, 500, "返回菜单", stdBtns['Normal'], stdBtns['Select'], \
+                           stdBtns['Click'], bf.btn_back, btnFont)
+    rank_img = pygame.image.load(Config.get('imgfolder') + 'rank.png').convert_alpha()
+
+    Btns['rank'] = Button(430, 670, "", rank_img, rank_img, rank_img, bf.btn_rank, btnFont)
+
+    back = dict()
+    back['Normal'] = pygame.image.load(Config.get('imgfolder') + 'back_0.png').convert_alpha()
+    back['Normal'] = pygame.transform.smoothscale(back['Normal'], (40, 40))
+    back['Select'] = pygame.image.load(Config.get('imgfolder') + 'back_1.png').convert_alpha()
+    back['Select'] = pygame.transform.smoothscale(back['Select'], (40, 40))
+    back['Click'] = pygame.image.load(Config.get('imgfolder') + 'back_2.png').convert_alpha()
+    back['Click'] = pygame.transform.smoothscale(back['Click'], (40, 40))
+    Btns['back'] = Button(10, 670, "", back['Normal'], back['Select'], back['Click'], bf.btn_back, btnFont)
     tom = dict()
     tom['Normal'] = pygame.image.load(Config.get('imgfolder') + 'tom_skill_1.png').convert_alpha()
     tom['Select'] = pygame.image.load(Config.get('imgfolder') + 'tom_skill.png').convert_alpha()
@@ -74,6 +86,6 @@ def init_button():
     jerry['Select'] = pygame.image.load(Config.get('imgfolder') + 'jerry_skill.png').convert_alpha()
     jerry['Click'] = pygame.image.load(Config.get('imgfolder') + 'jerry_skill.png').convert_alpha()
     Btns['jerry'] = Button(90, 500, "", jerry['Normal'], jerry['Select'], \
-                         jerry['Click'], bf.btn_jerry, btnFont)
+                           jerry['Click'], bf.btn_jerry, btnFont)
 
     return Btns
