@@ -95,6 +95,24 @@ def btn_sign_in():
     print('sign_in')
 
 
+def btn_rank():
+    gl.set_value('backStatus', gl.get_value('isGameStatus'))
+    gl.set_value('isGameStatus', 'board')
+
+
+def btn_back():
+    key_word = gl.get_value('isGameStatus')
+    if key_word == 'board':
+        print(gl.get_value('backStatus'))
+        gl.set_value('isGameStatus', gl.get_value('backStatus'))
+    elif key_word == 'menu' or key_word == 'sign_in' or key_word == 'register':
+        gl.set_value('isGameStatus', 'start')
+    elif key_word == 'game_map_select' or key_word == 'select_hero' or key_word == 'game_start':
+        gl.set_value('isGameStatus', 'menu')
+        gl.set_value('isLoadHero', False)
+        gl.set_value('load_map', 0)
+
+
 def btn_sign_in_check():
     pass_text_box = gl.get_value('pass_text_box')
     name_text_box = gl.get_value('name_text_box')
@@ -107,6 +125,7 @@ def btn_sign_in_check():
     if cursor.fetchone():
         gl.set_value('error_type', 0)
         gl.set_value('isGameStatus', 'menu')
+        gl.set_value('username', username)
     else:
         gl.set_value('error_type', 1)
         pass_text_box.clean_text()
