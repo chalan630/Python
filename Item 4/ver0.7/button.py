@@ -53,6 +53,7 @@ class Button:
         else:
             self.status = Button.NORMAL
 
+
     def mouseDown(self, x, y):
         if self.colli(x, y):
             self.status = Button.CLICK
