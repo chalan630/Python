@@ -27,20 +27,21 @@ def main():
     gl._init()
     # gl.set_value('isGameStatus', 'start')
     gl.set_value('GameMode', 'endless')
-    gl.set_value('isGameStatus', 'menu')
+    gl.set_value('isGameStatus', 'start')
     gl.set_value('isPause', False)
     gl.set_value('isLoadHero', False)
     gl.set_value('error_type', 0)
     gl.set_value('load_map', 0)
     gl.set_value('level', 1)
     gl.set_value('isSelectHero', False)
+    gl.set_value('score_save', False)
 
     # 改变目录 修正 vscode 中的路径异常问题
     os.chdir(sys.path[0])
 
     # 初始化响应环境
     pygame.init()
-    pygame.display.set_caption('躲避者 Demo Ver0.6')
+    pygame.display.set_caption('躲避者 Demo Ver0.7')
     screen = pygame.display.set_mode([Config.get('WIDTH'), Config.get('HEIGHT')])
     # 实例化Pygame 的time 模块的 Clock 对象
     clock = pygame.time.Clock()
@@ -57,6 +58,7 @@ def main():
     title_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 72)
     game_title_text = title_font.render("躲  避  者", True, (255, 255, 255))
     select_title_text = title_font.render("选择英雄", True, (255, 255, 255))
+    map_title_text = title_font.render("场景选择", True, (255, 255, 255))
 
     # 游戏正文
     while True:
@@ -65,8 +67,10 @@ def main():
         key_word = gl.get_value('isGameStatus')
         bg[gl.get_value('load_map')].draw(not gl.get_value('isPause'))               # 背景描绘
         if key_word != 0:
-            if key_word == 'start':
+            if key_word == 'start' or key_word == 'menu':
                 screen.blit(game_title_text, (100, 150))
+            if key_word == 'game_map_select':
+                screen.blit(map_title_text, (100, 150))
             if key_word == 'sign_in':
                 gf.sign_in(screen)
             if key_word == 'register':
@@ -77,6 +81,8 @@ def main():
                 gf.game_over(screen)
             if key_word == 'select_hero':
                 screen.blit(select_title_text, (90, 100))
+            if key_word == 'board':
+                gf.draw_board(screen)
         gf.draw_button(screen, Btns)  # 按钮绘制
         gf.error_message(screen)
         pygame.display.update()
