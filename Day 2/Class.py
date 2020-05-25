@@ -2,15 +2,15 @@
 @Description: Class.py
 @Author: chalan630
 @Date: 2019-12-25 14:23:08
-@LastEditTime : 2019-12-29 01:18:28
+@LastEditTime: 2020-05-20 01:01:42
 '''
 # 创建类
 
-    #xx: 公有变量
-    #_xx: 私有属性或方法，类对象和子类可以访问 import禁止导入
-    #__xx: 私有属性或方法，无法在外部直接访问
-    #__xx__: 系统定义名字
-    #xx_: 避免与关键字冲突
+    # xx: 公有变量
+    # _xx: 私有属性或方法，类对象和子类可以访问 import禁止导入
+    # __xx: 私有属性或方法，无法在外部直接访问
+    # __xx__: 系统定义名字
+    # xx_: 避免与关键字冲突
 
 class Dog():
     # 定义基本类型
@@ -24,14 +24,19 @@ class Dog():
         self.name = name
         self.age = age
         self.__weight
+
     def sit(self):
         print(self.name.title() + " is now sitting.")
+
     def roll_over(self):
-        print(self.name.title() + " rolled over.")   
+        print(self.name.title() + " rolled over.")
+
     def update_age(self):
         self.age += 1
+
     def get_weight(self):
         print(self.__weight)
+
 
 my_dog = Dog('willie', 6, 50)       # 实例化
 my_dog.name                         # 访问属性
