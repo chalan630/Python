@@ -37,7 +37,7 @@ def init_button():
                            pauseBtns['Select'], pauseBtns['Click'], bf.btn_pause, btnFont)
     Btns['resume'] = Button(pause_rect.left, pause_rect.top, "", resumeBtns['Normal'], \
                             resumeBtns['Select'], resumeBtns['Click'], bf.btn_pause, btnFont)
-    Btns['start'] = Button(90, 300, "开始游戏", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['start'] = Button(90, 400, "趣味模式", stdBtns['Normal'], stdBtns['Select'], \
                            stdBtns['Click'], bf.btn_start, btnFont)
     Btns['restart'] = Button(90, 400, "重新开始", stdBtns['Normal'], stdBtns['Select'], \
                              stdBtns['Click'], bf.btn_restart, btnFont)
@@ -49,17 +49,17 @@ def init_button():
                           stdBtns['Click'], bf.btn_quit, btnFont)
     Btns['sign_in_check'] = Button(90, 500, "登  陆", stdBtns['Normal'], stdBtns['Select'], \
                                    stdBtns['Click'], bf.btn_sign_in_check, btnFont)
-    Btns['register_check'] = Button(90, 500, "注  册", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['register_check'] = Button(90, 550, "注  册", stdBtns['Normal'], stdBtns['Select'], \
                                     stdBtns['Click'], bf.btn_register_check, btnFont)
     Btns['log_out'] = Button(90, 500, "退出登陆", stdBtns['Normal'], stdBtns['Select'], \
                              stdBtns['Click'], bf.btn_log_out, btnFont)
-    Btns['endless'] = Button(90, 400, "无尽模式", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['endless'] = Button(90, 300, "常规模式", stdBtns['Normal'], stdBtns['Select'], \
                              stdBtns['Click'], bf.btn_endless_mode, btnFont)
-    Btns['Map1'] = Button(90, 300, "Map 1", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map1'] = Button(90, 300, "绿茵小路", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map1, btnFont)
-    Btns['Map2'] = Button(90, 400, "Map 2", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map2'] = Button(90, 400, "幽暗地牢", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map2, btnFont)
-    Btns['Map3'] = Button(90, 500, "Map 3", stdBtns['Normal'], stdBtns['Select'], \
+    Btns['Map3'] = Button(90, 500, "霜冻之路", stdBtns['Normal'], stdBtns['Select'], \
                           stdBtns['Click'], bf.btn_map3, btnFont)
     Btns['back1'] = Button(90, 500, "返回菜单", stdBtns['Normal'], stdBtns['Select'], \
                            stdBtns['Click'], bf.btn_back, btnFont)
@@ -87,5 +87,14 @@ def init_button():
     jerry['Click'] = pygame.image.load(Config.get('imgfolder') + 'jerry_skill.png').convert_alpha()
     Btns['jerry'] = Button(90, 500, "", jerry['Normal'], jerry['Select'], \
                            jerry['Click'], bf.btn_jerry, btnFont)
+    sound_on = dict()
+    sound_on['on'] = pygame.image.load(Config.get('imgfolder') + 'sound_on.png').convert_alpha()
+    sound_on['on'] = pygame.transform.smoothscale(sound_on['on'], (40, 40))
+    sound_on['off'] = pygame.image.load(Config.get('imgfolder') + 'sound_off.png').convert_alpha()
+    sound_on['off'] = pygame.transform.smoothscale(sound_on['off'], (40, 40))
+    Btns['sound_on'] = Button(430, 10, "", sound_on['on'], sound_on['on'], \
+                              sound_on['off'], bf.btn_sound, btnFont)
+    Btns['sound_off'] = Button(430, 10, "", sound_on['off'], sound_on['off'], \
+                               sound_on['on'], bf.btn_sound, btnFont)
 
     return Btns

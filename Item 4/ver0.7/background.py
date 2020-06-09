@@ -12,6 +12,11 @@ from config import Config
 
 class Background:
     def __init__(self, screen, imagePath, picName):
+        """
+        :param screen:
+        :param imagePath:
+        :param picName:
+        """
         # 场景对象
         self.screen = screen
         self.screen_rect = screen.get_rect()

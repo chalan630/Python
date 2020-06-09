@@ -11,6 +11,7 @@ Config = {
     'HEIGHT': 720,
     'imgfolder': 'images/',
     'fontfolder': 'font/',
+    'musicfolder': 'sound/',
     'score': 10,
     'speed': 1
 }
