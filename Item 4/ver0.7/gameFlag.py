@@ -7,11 +7,12 @@
 '''
 """
 全局变量
-isGameStatus 'start','menu','sign_in','select_hero','game_map_select','game_start'
+isGameStatus 'start','menu','sign_in','select_hero','game_map_select','game_start','board','bgm'
 isSelectHero
 isHeroLoad
 isPause
 hero_name
+username
 hero
 score
 rocks
@@ -21,6 +22,7 @@ again_text_box
 error_type  # 登录注册中的错误信息
 load_map    # 加载地图
 level       # 级别
+backStatus  # ranking list专用
 """
 
 
