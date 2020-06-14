@@ -130,6 +130,7 @@ class Hero:
         在指定位置绘制角色
         @:param: flag:{bool} 是否移动
         """
+        print('Current speed: %d' % self.speed)
         if flag:
             self.switchImage()
             self.move()
@@ -137,6 +138,7 @@ class Hero:
         self.drawStatusBar()
         if self.invincibleStatus():
             self.screen.blit(self.image, self.rect)
+
 
     def drawStatusBar(self):
         HP_percent = self.HP_now / self.HP_upper_limit * 100
@@ -236,8 +238,6 @@ class Hero:
 
     def reloadSkill(self):
         score = gl.get_value('score')
-        print(score)
-        print(self.score)
         if score - self.score > 1500:
             if self.skill_count < 3:
                 self.skill_count += 1
