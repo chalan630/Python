@@ -1,13 +1,14 @@
 '''
 @Descripttion: 游戏函数
-@version: ver0.6
+@version: ver0.7
 @Author: chalan630
 @Date: 2020-03-02 23:37:29
-@LastEditTime: 2020-04-21 16:16:47
+@LastEditTime: 2020-06-06 00:37:34
 '''
 import pygame
 import sys
 import random
+import pymysql
 import gameFlag as gl
 from hero import Hero
 from config import Config
@@ -24,13 +25,14 @@ from tom import Tom
 
 
 # TODO: 开始界面方向键报错 √
-# TODO: 返回按钮
-# TODO: 多种英雄角色 技能系统
-# TODO: 排行榜
-# TODO: 登录注册 数据保存
+# TODO: 返回按钮 √
+# TODO: 多种英雄角色 技能系统 √
+# TODO: 排行榜(区分地图)
+# TODO: 登录注册 数据保存 √
 # TODO: 减速方块(草地) √
 # TODO: 禁止转向方块(雪地) √
 # TODO: 伤害方块(沙漠) √
+# TODO: 趣味关卡
 # TODO: 音效
 # TODO: 角色选择 √
 # TODO: 难度变化后更改障碍移动速度 √
@@ -39,6 +41,12 @@ from tom import Tom
 # TODO: 障碍伤害过高 √
 # TODO: **在wall和enemy的构造函数中传入当前游戏level**
 # TODO: 用户名或密码为空
+
+
+pygame.mixer.init()
+over_sound = pygame.mixer.Sound(Config.get('musicfolder') + "game_over.ogg")
+over_sound.set_volume(0.2)
+
 
 def check_keydown_events(event, mx, my):
     """
@@ -113,102 +121,195 @@ def check_event(Btns):
             # 判断鼠标是否移动到按钮范围之内
             for key in Btns:
                 if gl.get_value('isGameStatus') == 'start':
-                    if key == 'register' or key == 'sign_in' or key == 'quit':
+                    if key == 'register' or key == 'sign_in' or \
+                            key == 'quit' or key == 'rank' or \
+                            key == 'back':
                         Btns[key].getFocus(mx, my)
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].getFocus(mx, my)
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
+                        Btns[key].getFocus(mx, my)
+
                 elif gl.get_value('isGameStatus') == 'sign_in':
-                    if key == 'sign_in_check':
+                    if key == 'sign_in_check' or key == 'back':
+                        Btns[key].getFocus(mx, my)
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].getFocus(mx, my)
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'menu':
-                    if key == 'start' or key == 'log_out' or key == 'endless':
+                    if key == 'start' or key == 'log_out' or key == 'endless' or \
+                            key == 'rank':
+                        Btns[key].getFocus(mx, my)
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].getFocus(mx, my)
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'game_start':
                     if key == 'pause' and gl.get_value('isPause') == False:
                         Btns[key].getFocus(mx, my)
                     elif key == 'resume' and gl.get_value('isPause') == True:
                         Btns[key].getFocus(mx, my)
+                    elif key == 'back1' and gl.get_value('isPause') == True:
+                        Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'game_over':
-                    if key == 'restart':
+                    if key == 'restart' or key == 'back1' or key == 'rank':
                         Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'game_map_select':
-                    if key == 'Map1' or key == 'Map2' or key == 'Map3':
+                    if key == 'Map1' or key == 'Map2' or key == 'Map3' or \
+                            key == 'back' or key == 'rank':
+                        Btns[key].getFocus(mx, my)
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].getFocus(mx, my)
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'select_hero':
-                    if key == 'tom' or key == 'jerry':
+                    if key == 'tom' or key == 'jerry' or key == 'back':
                         Btns[key].getFocus(mx, my)
                 elif gl.get_value('isGameStatus') == 'register':
-                    if key == 'register_check':
+                    if key == 'register_check' or key == 'back':
+                        Btns[key].getFocus(mx, my)
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].getFocus(mx, my)
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
+                        Btns[key].getFocus(mx, my)
+                elif gl.get_value('isGameStatus') == 'board':
+                    if key == 'back':
                         Btns[key].getFocus(mx, my)
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed() == (1, 0, 0):  # 鼠标左键
                 for key in Btns:
                     if gl.get_value('isGameStatus') == 'start':
-                        if key == 'register' or key == 'sign_in' or key == 'quit':
+                        if key == 'register' or key == 'sign_in' or \
+                                key == 'quit' or key == 'rank' or \
+                                key == 'back':
+                            Btns[key].mouseDown(mx, my)
+                        if key == 'sound_off' and gl.get_value('bgm') == False:
+                            Btns[key].mouseDown(mx, my)
+                        elif key == 'sound_on' and gl.get_value('bgm') == True:
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'sign_in':
-                        if key == 'sign_in_check':
+                        if key == 'sign_in_check' or key == 'back':
+                            Btns[key].mouseDown(mx, my)
+                        if key == 'sound_off' and gl.get_value('bgm') == False:
+                            Btns[key].mouseDown(mx, my)
+                        elif key == 'sound_on' and gl.get_value('bgm') == True:
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'menu':
-                        if key == 'start' or key == 'log_out' or key == 'endless':
+                        if key == 'start' or key == 'log_out' or key == 'endless' or \
+                                key == 'rank':
+                            Btns[key].mouseDown(mx, my)
+                        if key == 'sound_off' and gl.get_value('bgm') == False:
+                            Btns[key].mouseDown(mx, my)
+                        elif key == 'sound_on' and gl.get_value('bgm') == True:
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'game_start':
                         if key == 'pause' and gl.get_value('isPause') == False:
                             Btns[key].mouseDown(mx, my)
                         elif key == 'resume' and gl.get_value('isPause') == True:
                             Btns[key].mouseDown(mx, my)
+                        elif key == 'back1' and gl.get_value('isPause') == True:
+                            Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'game_over':
-                        if key == 'restart':
+                        if key == 'restart' or key == 'back1' or key == 'rank':
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'game_map_select':
-                        if key == 'Map1' or key == 'Map2' or key == 'Map3':
+                        if key == 'Map1' or key == 'Map2' or key == 'Map3' or \
+                                key == 'back' or key == 'rank':
+                            Btns[key].mouseDown(mx, my)
+                        if key == 'sound_off' and gl.get_value('bgm') == False:
+                            Btns[key].mouseDown(mx, my)
+                        elif key == 'sound_on' and gl.get_value('bgm') == True:
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'select_hero':
-                        if key == 'tom' or key == 'jerry':
+                        if key == 'tom' or key == 'jerry' or key == 'back':
                             Btns[key].mouseDown(mx, my)
                     elif gl.get_value('isGameStatus') == 'register':
-                        if key == 'register_check':
+                        if key == 'register_check' or key == 'back':
+                            Btns[key].mouseDown(mx, my)
+                        if key == 'sound_off' and gl.get_value('bgm') == False:
+                            Btns[key].mouseDown(mx, my)
+                        elif key == 'sound_on' and gl.get_value('bgm') == True:
+                            Btns[key].mouseDown(mx, my)
+                    elif gl.get_value('isGameStatus') == 'board':
+                        if key == 'back':
                             Btns[key].mouseDown(mx, my)
 
         elif event.type == pygame.MOUSEBUTTONUP:
             for key in Btns:
                 if gl.get_value('isGameStatus') == 'start':
-                    if key == 'register' or key == 'sign_in' or key == 'quit':
+                    if key == 'register' or key == 'sign_in' or \
+                            key == 'quit' or key == 'rank' or \
+                            key == 'back':
+                        Btns[key].mouseUp()
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].mouseUp()
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'sign_in':
-                    if key == 'sign_in_check':
+                    if key == 'sign_in_check' or key == 'back':
+                        Btns[key].mouseUp()
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].mouseUp()
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'menu':
-                    if key == 'start' or key == 'log_out' or key == 'endless':
+                    if key == 'start' or key == 'log_out' or key == 'endless' or \
+                            key == 'rank':
+                        Btns[key].mouseUp()
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].mouseUp()
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'game_start':
                     if key == 'pause' and gl.get_value('isPause') == False:
                         Btns[key].mouseUp()
                     elif key == 'resume' and gl.get_value('isPause') == True:
                         Btns[key].mouseUp()
+                    elif key == 'back1' and gl.get_value('isPause') == True:
+                        Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'game_over':
-                    if key == 'restart':
+                    if key == 'restart' or key == 'back1' or key == 'rank':
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'game_map_select':
-                    if key == 'Map1' or key == 'Map2' or key == 'Map3':
+                    if key == 'Map1' or key == 'Map2' or key == 'Map3' or \
+                            key == 'back' or key == 'rank':
+                        Btns[key].mouseUp()
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].mouseUp()
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'select_hero':
-                    if key == 'tom' or key == 'jerry':
+                    if key == 'tom' or key == 'jerry' or key == 'back':
                         Btns[key].mouseUp()
                 elif gl.get_value('isGameStatus') == 'register':
-                    if key == 'register_check':
+                    if key == 'register_check' or key == 'back':
+                        Btns[key].mouseUp()
+                    if key == 'sound_off' and gl.get_value('bgm') == False:
+                        Btns[key].mouseUp()
+                    elif key == 'sound_on' and gl.get_value('bgm') == True:
+                        Btns[key].mouseUp()
+                elif gl.get_value('isGameStatus') == 'board':
+                    if key == 'back':
                         Btns[key].mouseUp()
 
 
 def error_message(screen):
     num = gl.get_value('error_type')
-    title_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 16)
+    title_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 32)
     if num == 1:
-        sign_in_text = title_font.render("用户名或密码错误", True, (255, 255, 255))
-        screen.blit(sign_in_text, (112, 270))
+        sign_in_text = title_font.render("用户名或密码错误", True, (0, 0, 0))
+        screen.blit(sign_in_text, (112, 460))
     elif num == 2:
-        sign_in_text = title_font.render("用户名已存在", True, (255, 255, 255))
-        screen.blit(sign_in_text, (112, 270))
-
+        sign_in_text = title_font.render("用户名已存在", True, (0, 0, 0))
+        screen.blit(sign_in_text, (112, 190))
+    elif num == 3:
+        sign_in_text = title_font.render("用户名或密码不能为空", True, (0, 0, 0))
+        screen.blit(sign_in_text, (112, 190))
+    elif num == 4:
+        sign_in_text = title_font.render("两次输入密码不一致", True, (0, 0, 0))
+        screen.blit(sign_in_text, (112, 190))
 
 def sign_in(screen):
     """
@@ -221,7 +322,12 @@ def sign_in(screen):
     name_text_box.draw(screen)
     pass_text_box.draw(screen, True)
     title_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 72)
+    massage_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 30)
+    hint_in_text = massage_font.render("用户名：", True, (255, 255, 255))
+    hint1_in_text = massage_font.render("密 码：", True, (255, 255, 255))
     sign_in_text = title_font.render("登 陆", True, (255, 255, 255))
+    screen.blit(hint_in_text, (110, 260))
+    screen.blit(hint1_in_text, (110, 360))
     screen.blit(sign_in_text, (150, 150))
 
 
@@ -238,12 +344,45 @@ def register(screen):
     pass_text_box.draw(screen, True)
     again_text_box.draw(screen, True)
     title_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 72)
-    sign_in_text = title_font.render("注 册", True, (255, 255, 255))
-    screen.blit(sign_in_text, (150, 100))
+    massage_font = pygame.font.Font(Config.get('fontfolder') + 'button.ttf', 30)
+    hint_in_text = massage_font.render("用户名：", True, (255, 255, 255))
+    hint1_in_text = massage_font.render("登录密码：", True, (255, 255, 255))
+    hint2_in_text = massage_font.render("确认密码：", True, (255, 255, 255))
+    screen.blit(hint_in_text, (110, 220))
+    screen.blit(hint1_in_text, (110, 320))
+    screen.blit(hint2_in_text, (110, 420))
+    register_text = title_font.render("注 册", True, (255, 255, 255))
+    screen.blit(register_text, (150, 100))
 
 
 def callback():
     print("回车测试")
+
+
+def draw_board(screen):
+    if gl.get_value('isGameStatus') == 'board':
+        title_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
+        font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 30)
+
+        db = pymysql.connect("localhost", "root", "19971231", "hider")
+        cursor = db.cursor()
+        sql = "SELECT * FROM board ORDER BY score DESC"
+        cursor.execute(sql)
+        data = cursor.fetchall()
+
+        title_text = title_font.render("Ranking List", True, (255, 255, 255))
+        screen.blit(title_text, (150, 50))
+        table_text = font.render("No.      Score      Username", True, (255, 255, 255))
+        screen.blit(table_text, (70, 120))
+        for i in range(len(data)):
+            if i <= 10:
+                no_text = font.render(str(i+1)+'.', True, (255, 218, 185))
+                screen.blit(no_text, (70, 160 + i * 40))
+                score_text = font.render(str(data[i][1]), True, (139, 69, 19))
+                screen.blit(score_text, (175, 160 + i * 40))
+                name_text = font.render(str(data[i][2]), True, (255, 218, 185))
+                screen.blit(name_text, (315, 160 + i * 40))
+        db.close()
 
 
 def game_over(screen):
@@ -252,15 +391,25 @@ def game_over(screen):
     :param screen:
     :return:
     """
+    # 最高分
+    db = pymysql.connect("localhost", "root", "19971231", "hider")
+    cursor = db.cursor()
+    sql = "SELECT * FROM board ORDER BY score DESC"
+    cursor.execute(sql)
+    data = cursor.fetchone()
+    if data:
+        record_score = data[1]
+    else:
+        record_score = 0
+
+    # 当前分数
     score_font = pygame.font.Font(Config.get('fontfolder') + 'text.ttf', 36)
     score = gl.get_value('score')
-    record_score = 0
-    with open("record.txt", "r") as f:
-        record_score = int(f.read())
-    if gl.get_value('score') > record_score:
-        with open("record.txt", "w") as f:
-            f.write(str(gl.get_value('score')))
-
+    if not gl.get_value('score_save'):
+        sql = "INSERT INTO BOARD(score, nickname) VALUES(%d, '%s')" % (score, gl.get_value('username'))
+        cursor.execute(sql)
+        gl.set_value('score_save', True)
+    db.close()
     width = screen.get_rect().width
     height = screen.get_rect().height
 
@@ -326,6 +475,7 @@ def game_start(screen):
     游戏开始函数(一级函数)
     :param screen: 游戏屏幕数据
     """
+    gl.set_value('score_save', False)
     if select_hero(screen):
         if gl.get_value('GameMode') == 'endless':
             game_endless(screen)
@@ -417,7 +567,8 @@ def gift_function(screen):
     step = len(gift_bag)
     if step == 0:
         gift_list = ['health', 'score', 'limit']
-        index = random.randint(0, 2)
+        # index = random.randint(0, 2)
+        index = 0
         if gift_list[index] == 'health':
             health_function(screen)
         elif gift_list[index] == 'score':
@@ -521,6 +672,7 @@ def check_collide():
         check_hero_star_collide(hero, gift_bag)
     HP = hero.getHP()
     if HP <= 0:
+        over_sound.play()
         gl.set_value('isGameStatus', 'game_over')
 
 
@@ -817,25 +969,61 @@ def draw_button(screen, Btns):
         Btns['register'].draw(screen)
         Btns['sign_in'].draw(screen)
         Btns['quit'].draw(screen)
+        Btns['rank'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
     elif key_word == 'sign_in':
         Btns['sign_in_check'].draw(screen)
+        Btns['back'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
     elif key_word == 'menu':
         Btns['start'].draw(screen)
         Btns['endless'].draw(screen)
         Btns['log_out'].draw(screen)
+        Btns['rank'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
     elif key_word == 'game_start':
         if gl.get_value('isPause') == False:
             Btns['pause'].draw(screen)
         elif gl.get_value('isPause'):
             Btns['resume'].draw(screen)
+            Btns['back1'].draw(screen)
     elif key_word == 'game_over':
         Btns['restart'].draw(screen)
+        Btns['back1'].draw(screen)
+        Btns['rank'].draw(screen)
     elif key_word == 'game_map_select':
         Btns['Map1'].draw(screen)
         Btns['Map2'].draw(screen)
         Btns['Map3'].draw(screen)
+        Btns['rank'].draw(screen)
+        Btns['back'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
     elif key_word == 'select_hero':
         Btns['tom'].draw(screen)
         Btns['jerry'].draw(screen)
+        Btns['back'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
     elif key_word == 'register':
         Btns['register_check'].draw(screen)
+        Btns['back'].draw(screen)
+        if gl.get_value('bgm'):
+            Btns['sound_on'].draw(screen)
+        else:
+            Btns['sound_off'].draw(screen)
+    elif key_word == 'board':
+        Btns['back'].draw(screen)
