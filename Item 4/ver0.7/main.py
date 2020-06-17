@@ -49,7 +49,7 @@ def main():
     pygame.mixer.music.play(-1)
 
 
-    pygame.display.set_caption('躲避者 Demo Ver0.7')
+    pygame.display.set_caption('躲避者')
     screen = pygame.display.set_mode([Config.get('WIDTH'), Config.get('HEIGHT')])
     # 实例化Pygame 的time 模块的 Clock 对象
     clock = pygame.time.Clock()

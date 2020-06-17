@@ -1,4 +1,5 @@
 import pygame
+from config import Config
 
 
 class TextBox:
@@ -19,7 +20,9 @@ class TextBox:
         self.callback = callback
         self.size = 10  # 文本框长度
         # 创建
-        self.__surface = pygame.Surface((w, h))
+        # self.__surface = pygame.Surface((w, h))
+        self.textboxImg = pygame.image.load(Config.get('imgfolder') + 'textbox.png').convert_alpha()
+        self.__surface = pygame.transform.smoothscale(self.textboxImg, (w, h))
         # 如果font为None,那么效果可能不太好，建议传入font，更好调节
         if font is None:
             self.font = pygame.font.Font(None, 32)  # 使用pygame自带字体
@@ -34,13 +37,13 @@ class TextBox:
             return False
 
     def draw(self, dest_surf, is_hidden=False):
-        if is_hidden:
+        if is_hidden:   # 输入密码
             hidden_text = "*" * len(self.text)
             text_surf = self.font.render(hidden_text, True, (255, 255, 255))
-        else:
+        else:           # 输入账号
             text_surf = self.font.render(self.text, True, (255, 255, 255))
         dest_surf.blit(self.__surface, (self.x, self.y))
-        dest_surf.blit(text_surf, (self.x, self.y + (self.height - text_surf.get_height())),
+        dest_surf.blit(text_surf, (self.x + 5, self.y + (self.height - text_surf.get_height())),
                        (0, 0, self.width, self.height))
 
     def key_down(self, x, y, event):
